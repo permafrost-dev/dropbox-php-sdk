@@ -4,15 +4,13 @@ namespace Permafrost\Dropbox\Models;
 
 class ModelFactory
 {
-
     /**
      * Make a Model Factory
      *
-     * @param  array $data Model Data
-     *
+     * @param  array  $data  Model Data
      * @return \Permafrost\Dropbox\Models\ModelInterface
      */
-    public static function make(array $data = array())
+    public static function make(array $data = [])
     {
         if (static::isFileOrFolder($data)) {
             $tag = $data['.tag'];
@@ -53,8 +51,6 @@ class ModelFactory
     }
 
     /**
-     * @param array $data
-     *
      * @return bool
      */
     protected static function isFileOrFolder(array $data)
@@ -63,8 +59,7 @@ class ModelFactory
     }
 
     /**
-     * @param string $tag
-     *
+     * @param  string  $tag
      * @return bool
      */
     protected static function isFile($tag)
@@ -73,8 +68,7 @@ class ModelFactory
     }
 
     /**
-     * @param string $tag
-     *
+     * @param  string  $tag
      * @return bool
      */
     protected static function isFolder($tag)
@@ -83,8 +77,6 @@ class ModelFactory
     }
 
     /**
-     * @param array $data
-     *
      * @return bool
      */
     protected static function isTemporaryLink(array $data)
@@ -93,8 +85,6 @@ class ModelFactory
     }
 
     /**
-     * @param array $data
-     *
      * @return bool
      */
     protected static function isList(array $data)
@@ -103,8 +93,6 @@ class ModelFactory
     }
 
     /**
-     * @param array $data
-     *
      * @return bool
      */
     protected static function isSearchResult(array $data)
@@ -113,12 +101,10 @@ class ModelFactory
     }
 
     /**
-     * @param array $data
-     *
      * @return bool
      */
     protected static function isDeletedFileOrFolder(array $data)
     {
-        return !isset($data['.tag']) || !isset($data['id']);
+        return ! isset($data['.tag']) || ! isset($data['id']);
     }
 }

@@ -1,10 +1,11 @@
 <?php
+
 namespace Permafrost\Dropbox\Security;
 
 use Permafrost\Dropbox\Exceptions\DropboxClientException;
 
 /**
- * @inheritdoc
+ * {@inheritdoc}
  */
 class OpenSslRandomStringGenerator implements RandomStringGeneratorInterface
 {
@@ -24,9 +25,9 @@ class OpenSslRandomStringGenerator implements RandomStringGeneratorInterface
      */
     public function __construct()
     {
-        if (!function_exists('openssl_random_pseudo_bytes')) {
+        if (! function_exists('openssl_random_pseudo_bytes')) {
             throw new DropboxClientException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'The function openssl_random_pseudo_bytes() does not exist.'
             );
         }
@@ -35,11 +36,10 @@ class OpenSslRandomStringGenerator implements RandomStringGeneratorInterface
     /**
      * Get a randomly generated secure token
      *
-     * @param  int $length Length of the string to return
+     * @param  int  $length  Length of the string to return
+     * @return string
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
-     *
-     * @return string
      */
     public function generateString($length)
     {
@@ -49,12 +49,12 @@ class OpenSslRandomStringGenerator implements RandomStringGeneratorInterface
 
         //Unable to create binary string
         if ($binaryString === false) {
-            throw new DropboxClientException(static::ERROR_MESSAGE . 'openssl_random_pseudo_bytes() returned an unknown error.');
+            throw new DropboxClientException(static::ERROR_MESSAGE.'openssl_random_pseudo_bytes() returned an unknown error.');
         }
 
         //Binary String is not cryptographically strong
         if ($cryptoStrong !== true) {
-            throw new DropboxClientException(static::ERROR_MESSAGE . 'openssl_random_pseudo_bytes() returned a pseudo-random string but it was not cryptographically secure and cannot be used.');
+            throw new DropboxClientException(static::ERROR_MESSAGE.'openssl_random_pseudo_bytes() returned a pseudo-random string but it was not cryptographically secure and cannot be used.');
         }
 
         //Convert binary to hex

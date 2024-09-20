@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Http;
 
 /**
@@ -30,9 +31,9 @@ class DropboxRawResponse
     /**
      * Create a new GraphRawResponse instance
      *
-     * @param array     $headers        Response headers
-     * @param string    $body           Raw response body
-     * @param int|null  $statusCode     HTTP response code
+     * @param  array  $headers  Response headers
+     * @param  string  $body  Raw response body
+     * @param  int|null  $statusCode  HTTP response code
      */
     public function __construct($headers, $body, $statusCode = null)
     {

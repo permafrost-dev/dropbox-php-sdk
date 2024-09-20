@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class SearchResults extends MetadataCollection
@@ -28,8 +29,7 @@ class SearchResults extends MetadataCollection
      * Process items and cast them
      * to their respective Models
      *
-     * @param array $items Unprocessed Items
-     *
+     * @param  array  $items  Unprocessed Items
      * @return void
      */
     protected function processItems(array $items)

@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Security;
 
 use InvalidArgumentException;
@@ -14,11 +15,10 @@ class RandomStringGeneratorFactory
     /**
      * Make a Random String Generator
      *
-     * @param  null|string|\Permafrost\Dropbox\Security\RandomStringGeneratorInterface $generator
+     * @param  null|string|\Permafrost\Dropbox\Security\RandomStringGeneratorInterface  $generator
+     * @return \Permafrost\Dropbox\Security\RandomStringGeneratorInterface
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
-     *
-     * @return \Permafrost\Dropbox\Security\RandomStringGeneratorInterface
      */
     public static function makeRandomStringGenerator($generator = null)
     {
@@ -34,13 +34,13 @@ class RandomStringGeneratorFactory
         }
 
         // Mcrypt
-        if ('mcrypt' === $generator) {
-            return new McryptRandomStringGenerator();
+        if ($generator === 'mcrypt') {
+            return new McryptRandomStringGenerator;
         }
 
         //OpenSSL
-        if ('openssl' === $generator) {
-            return new OpenSslRandomStringGenerator();
+        if ($generator === 'openssl') {
+            return new OpenSslRandomStringGenerator;
         }
 
         //Invalid Argument
@@ -50,20 +50,20 @@ class RandomStringGeneratorFactory
     /**
      * Get Default Random String Generator
      *
-     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
-     *
      * @return RandomStringGeneratorInterface
+     *
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     protected static function defaultRandomStringGenerator()
     {
         //Mcrypt
         if (function_exists('mcrypt_create_iv') && version_compare(PHP_VERSION, '7.1', '<')) {
-            return new McryptRandomStringGenerator();
+            return new McryptRandomStringGenerator;
         }
 
         //OpenSSL
         if (function_exists('openssl_random_pseudo_bytes')) {
-            return new OpenSslRandomStringGenerator();
+            return new OpenSslRandomStringGenerator;
         }
 
         //Unable to create a random string generator

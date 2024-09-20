@@ -1,11 +1,11 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 use DateTime;
 
 class CopyReference extends BaseModel
 {
-
     /**
      * The expiration date of the copy reference
      *
@@ -27,11 +27,8 @@ class CopyReference extends BaseModel
      */
     protected $metadata;
 
-
     /**
      * Create a new CopyReference instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

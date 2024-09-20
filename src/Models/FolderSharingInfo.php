@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class FolderSharingInfo extends BaseModel
 {
-
     /**
      * True if the file or folder is inside a read-only shared folder.
      *
@@ -27,11 +27,8 @@ class FolderSharingInfo extends BaseModel
      */
     protected $shared_folder_id;
 
-
     /**
      * Create a new Folder Sharing Info instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

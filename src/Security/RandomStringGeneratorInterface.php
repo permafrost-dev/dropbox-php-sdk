@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Security;
 
 /**
@@ -11,8 +12,7 @@ interface RandomStringGeneratorInterface
     /**
      * Get a randomly generated secure token
      *
-     * @param  int $length Length of the string to return
-     *
+     * @param  int  $length  Length of the string to return
      * @return string
      */
     public function generateString($length);

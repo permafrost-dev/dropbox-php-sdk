@@ -2,22 +2,22 @@
 
 namespace Permafrost\Dropbox;
 
+use Permafrost\Dropbox\Authentication\DropboxAuthHelper;
+use Permafrost\Dropbox\Authentication\OAuth2Client;
+use Permafrost\Dropbox\Exceptions\DropboxClientException;
+use Permafrost\Dropbox\Http\Clients\DropboxHttpClientFactory;
+use Permafrost\Dropbox\Models\Account;
+use Permafrost\Dropbox\Models\AccountList;
+use Permafrost\Dropbox\Models\CopyReference;
 use Permafrost\Dropbox\Models\DeletedMetadata;
 use Permafrost\Dropbox\Models\File;
-use Permafrost\Dropbox\Models\Account;
-use Permafrost\Dropbox\Models\Thumbnail;
-use Permafrost\Dropbox\Models\AccountList;
-use Permafrost\Dropbox\Models\ModelFactory;
 use Permafrost\Dropbox\Models\FileMetadata;
-use Permafrost\Dropbox\Models\CopyReference;
 use Permafrost\Dropbox\Models\FolderMetadata;
 use Permafrost\Dropbox\Models\ModelCollection;
-use Permafrost\Dropbox\Authentication\OAuth2Client;
-use Permafrost\Dropbox\Store\PersistentDataStoreFactory;
-use Permafrost\Dropbox\Authentication\DropboxAuthHelper;
-use Permafrost\Dropbox\Exceptions\DropboxClientException;
+use Permafrost\Dropbox\Models\ModelFactory;
+use Permafrost\Dropbox\Models\Thumbnail;
 use Permafrost\Dropbox\Security\RandomStringGeneratorFactory;
-use Permafrost\Dropbox\Http\Clients\DropboxHttpClientFactory;
+use Permafrost\Dropbox\Store\PersistentDataStoreFactory;
 
 /**
  * Dropbox
@@ -96,7 +96,8 @@ class DropboxApi
      * Create a new Dropbox instance
      *
      * @param \Permafrost\Dropbox\DropboxApp
-     * @param array $config Configuration Array
+     * @param  array  $config  Configuration Array
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function __construct(DropboxApp $app, array $config = [])
@@ -105,7 +106,7 @@ class DropboxApi
         $config = array_merge([
             'http_client_handler' => null,
             'random_string_generator' => null,
-            'persistent_data_store' => null
+            'persistent_data_store' => null,
         ], $config);
 
         //Set the app
@@ -148,7 +149,7 @@ class DropboxApi
      */
     public function getOAuth2Client()
     {
-        if (!$this->oAuth2Client instanceof OAuth2Client) {
+        if (! $this->oAuth2Client instanceof OAuth2Client) {
             return new OAuth2Client(
                 $this->getApp(),
                 $this->getClient(),
@@ -202,20 +203,19 @@ class DropboxApi
     /**
      * Get the Metadata for a file or folder
      *
-     * @param  string $path   Path of the file or folder
-     * @param  array  $params Additional Params
-     *
+     * @param  string  $path  Path of the file or folder
+     * @param  array  $params  Additional Params
      * @return \Permafrost\Dropbox\Models\FileMetadata | \Permafrost\Dropbox\Models\FolderMetadata
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-get_metadata
-     *
      */
     public function getMetadata($path, array $params = [])
     {
         //Root folder is unsupported
         if ($path === '/') {
-            throw new DropboxClientException("Metadata for the root folder is unsupported.");
+            throw new DropboxClientException('Metadata for the root folder is unsupported.');
         }
 
         //Set the path
@@ -231,33 +231,32 @@ class DropboxApi
     /**
      * Make a HTTP POST Request to the API endpoint type
      *
-     * @param  string $endpoint API Endpoint to send Request to
-     * @param  array $params Request Query Params
-     * @param  string $accessToken Access Token to send with the Request
-     *
+     * @param  string  $endpoint  API Endpoint to send Request to
+     * @param  array  $params  Request Query Params
+     * @param  string  $accessToken  Access Token to send with the Request
      * @return \Permafrost\Dropbox\DropboxResponse
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
-    */
+     */
     public function postToAPI($endpoint, array $params = [], $accessToken = null)
     {
-        return $this->sendRequest("POST", $endpoint, 'api', $params, $accessToken);
+        return $this->sendRequest('POST', $endpoint, 'api', $params, $accessToken);
     }
 
     /**
      * Make Request to the API
      *
-     * @param  string      $method       HTTP Request Method
-     * @param  string      $endpoint     API Endpoint to send Request to
-     * @param  string      $endpointType Endpoint type ['api'|'content']
-     * @param  array       $params       Request Query Params
-     * @param  string      $accessToken  Access Token to send with the Request
-     * @param  DropboxFile $responseFile Save response to the file
-     *
+     * @param  string  $method  HTTP Request Method
+     * @param  string  $endpoint  API Endpoint to send Request to
+     * @param  string  $endpointType  Endpoint type ['api'|'content']
+     * @param  array  $params  Request Query Params
+     * @param  string  $accessToken  Access Token to send with the Request
+     * @param  DropboxFile  $responseFile  Save response to the file
      * @return \Permafrost\Dropbox\DropboxResponse
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
-    public function sendRequest($method, $endpoint, $endpointType = 'api', array $params = [], $accessToken = null, DropboxFile $responseFile = null)
+    public function sendRequest($method, $endpoint, $endpointType = 'api', array $params = [], $accessToken = null, ?DropboxFile $responseFile = null)
     {
         //Access Token
         $accessToken = $this->getAccessToken() ? $this->getAccessToken() : $accessToken;
@@ -286,8 +285,7 @@ class DropboxApi
     /**
      * Set the Access Token.
      *
-     * @param string $accessToken Access Token
-     *
+     * @param  string  $accessToken  Access Token
      * @return \Permafrost\Dropbox\DropboxApi Dropbox Client
      */
     public function setAccessToken($accessToken)
@@ -300,7 +298,6 @@ class DropboxApi
     /**
      * Make Model from DropboxResponse
      *
-     * @param  DropboxResponse $response
      *
      * @return \Permafrost\Dropbox\Models\ModelInterface
      *
@@ -322,12 +319,13 @@ class DropboxApi
     /**
      * Get the contents of a Folder
      *
-     * @param  string $path Path to the folder. Defaults to root.
-     * @param  array $params Additional Params
+     * @param  string  $path  Path to the folder. Defaults to root.
+     * @param  array  $params  Additional Params
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-list_folder
      *
      * @return \Permafrost\Dropbox\Models\MetadataCollection
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function listFolder($path = null, array $params = [])
@@ -335,7 +333,7 @@ class DropboxApi
         //Specify the root folder as an
         //empty string rather than as "/"
         if ($path === '/') {
-            $path = "";
+            $path = '';
         }
 
         //Set the path
@@ -352,12 +350,13 @@ class DropboxApi
      * Paginate through all files and retrieve updates to the folder,
      * using the cursor retrieved from listFolder or listFolderContinue
      *
-     * @param  string $cursor The cursor returned by your
-     *                        last call to listFolder or listFolderContinue
+     * @param  string  $cursor  The cursor returned by your
+     *                          last call to listFolder or listFolderContinue
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-list_folder-continue
      *
      * @return \Permafrost\Dropbox\Models\MetadataCollection
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function listFolderContinue($cursor)
@@ -371,22 +370,20 @@ class DropboxApi
     /**
      * Get a cursor for the folder's state.
      *
-     * @param  string $path   Path to the folder. Defaults to root.
-     * @param  array  $params Additional Params
-     *
+     * @param  string  $path  Path to the folder. Defaults to root.
+     * @param  array  $params  Additional Params
      * @return string The Cursor for the folder's state
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-list_folder-get_latest_cursor
-     *
      */
     public function listFolderLatestCursor($path, array $params = [])
     {
         //Specify the root folder as an
         //empty string rather than as "/"
         if ($path === '/') {
-            $path = "";
+            $path = '';
         }
 
         //Set the path
@@ -400,8 +397,8 @@ class DropboxApi
         $cursor = isset($body['cursor']) ? $body['cursor'] : false;
 
         //No cursor returned
-        if (!$cursor) {
-            throw new DropboxClientException("Could not retrieve cursor. Something went wrong.");
+        if (! $cursor) {
+            throw new DropboxClientException('Could not retrieve cursor. Something went wrong.');
         }
 
         //Return the cursor
@@ -411,12 +408,13 @@ class DropboxApi
     /**
      * Get Revisions of a File
      *
-     * @param  string $path Path to the file
-     * @param  array $params Additional Params
+     * @param  string  $path  Path to the file
+     * @param  array  $params  Additional Params
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-list_revisions
      *
      * @return \Permafrost\Dropbox\Models\ModelCollection
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function listRevisions($path, array $params = [])
@@ -447,13 +445,14 @@ class DropboxApi
     /**
      * Search a folder for files/folders
      *
-     * @param  string $path Path to search
-     * @param  string $query Search Query
-     * @param  array $params Additional Params
+     * @param  string  $path  Path to search
+     * @param  string  $query  Search Query
+     * @param  array  $params  Additional Params
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-search
      *
      * @return \Permafrost\Dropbox\Models\SearchResults
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function search($path, $query, array $params = [])
@@ -461,7 +460,7 @@ class DropboxApi
         //Specify the root folder as an
         //empty string rather than as "/"
         if ($path === '/') {
-            $path = "";
+            $path = '';
         }
 
         //Set the path and query
@@ -478,21 +477,19 @@ class DropboxApi
     /**
      * Create a folder at the given path
      *
-     * @param  string  $path       Path to create
-     * @param  boolean $autorename Auto Rename File
-     *
+     * @param  string  $path  Path to create
+     * @param  bool  $autorename  Auto Rename File
      * @return \Permafrost\Dropbox\Models\FolderMetadata
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-create_folder
-     *
      */
     public function createFolder($path, $autorename = false)
     {
         //Path cannot be null
         if (is_null($path)) {
-            throw new DropboxClientException("Path cannot be null.");
+            throw new DropboxClientException('Path cannot be null.');
         }
 
         //Create Folder
@@ -508,20 +505,18 @@ class DropboxApi
     /**
      * Delete a file or folder at the given path
      *
-     * @param  string $path Path to file/folder to delete
-     *
+     * @param  string  $path  Path to file/folder to delete
      * @return \Permafrost\Dropbox\Models\DeletedMetadata
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-delete
-     *
      */
     public function delete($path)
     {
         //Path cannot be null
         if (is_null($path)) {
-            throw new DropboxClientException("Path cannot be null.");
+            throw new DropboxClientException('Path cannot be null.');
         }
 
         //Delete
@@ -529,8 +524,8 @@ class DropboxApi
         $body = $response->getDecodedBody();
 
         //Response doesn't have Metadata
-        if (!isset($body['metadata']) || !is_array($body['metadata'])) {
-            throw new DropboxClientException("Invalid Response.");
+        if (! isset($body['metadata']) || ! is_array($body['metadata'])) {
+            throw new DropboxClientException('Invalid Response.');
         }
 
         return new DeletedMetadata($body['metadata']);
@@ -539,21 +534,19 @@ class DropboxApi
     /**
      * Move a file or folder to a different location
      *
-     * @param  string $fromPath Path to be moved
-     * @param  string $toPath   Path to be moved to
-     *
+     * @param  string  $fromPath  Path to be moved
+     * @param  string  $toPath  Path to be moved to
      * @return \Permafrost\Dropbox\Models\DeletedMetadata|\Permafrost\Dropbox\Models\FileMetadata
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-move
-     *
      */
     public function move($fromPath, $toPath)
     {
         //From and To paths cannot be null
         if (is_null($fromPath) || is_null($toPath)) {
-            throw new DropboxClientException("From and To paths cannot be null.");
+            throw new DropboxClientException('From and To paths cannot be null.');
         }
 
         //Response
@@ -566,21 +559,19 @@ class DropboxApi
     /**
      * Copy a file or folder to a different location
      *
-     * @param  string $fromPath Path to be copied
-     * @param  string $toPath   Path to be copied to
-     *
+     * @param  string  $fromPath  Path to be copied
+     * @param  string  $toPath  Path to be copied to
      * @return \Permafrost\Dropbox\Models\DeletedMetadata|\Permafrost\Dropbox\Models\FileMetadata
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-copy
-     *
      */
     public function copy($fromPath, $toPath)
     {
         //From and To paths cannot be null
         if (is_null($fromPath) || is_null($toPath)) {
-            throw new DropboxClientException("From and To paths cannot be null.");
+            throw new DropboxClientException('From and To paths cannot be null.');
         }
 
         //Response
@@ -593,21 +584,19 @@ class DropboxApi
     /**
      * Restore a file to the specific version
      *
-     * @param  string $path Path to the file to restore
-     * @param  string $rev  Revision to store for the file
-     *
+     * @param  string  $path  Path to the file to restore
+     * @param  string  $rev  Revision to store for the file
      * @return \Permafrost\Dropbox\Models\DeletedMetadata|\Permafrost\Dropbox\Models\FileMetadata|\Permafrost\Dropbox\Models\FolderMetadata
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-restore
-     *
      */
     public function restore($path, $rev)
     {
         //Path and Revision cannot be null
         if (is_null($path) || is_null($rev)) {
-            throw new DropboxClientException("Path and Revision cannot be null.");
+            throw new DropboxClientException('Path and Revision cannot be null.');
         }
 
         //Response
@@ -623,20 +612,18 @@ class DropboxApi
     /**
      * Get Copy Reference
      *
-     * @param  string $path Path to the file or folder to get a copy reference to
-     *
+     * @param  string  $path  Path to the file or folder to get a copy reference to
      * @return \Permafrost\Dropbox\Models\CopyReference
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-copy_reference-get
-     *
      */
     public function getCopyReference($path)
     {
         //Path cannot be null
         if (is_null($path)) {
-            throw new DropboxClientException("Path cannot be null.");
+            throw new DropboxClientException('Path cannot be null.');
         }
 
         //Get Copy Reference
@@ -650,21 +637,19 @@ class DropboxApi
     /**
      * Save Copy Reference
      *
-     * @param  string $path          Path to the file or folder to get a copy reference to
-     * @param  string $copyReference Copy reference returned by getCopyReference
-     *
+     * @param  string  $path  Path to the file or folder to get a copy reference to
+     * @param  string  $copyReference  Copy reference returned by getCopyReference
      * @return \Permafrost\Dropbox\Models\FileMetadata|\Permafrost\Dropbox\Models\FolderMetadata
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-copy_reference-save
-     *
      */
     public function saveCopyReference($path, $copyReference)
     {
         //Path and Copy Reference cannot be null
         if (is_null($path) || is_null($copyReference)) {
-            throw new DropboxClientException("Path and Copy Reference cannot be null.");
+            throw new DropboxClientException('Path and Copy Reference cannot be null.');
         }
 
         //Save Copy Reference
@@ -672,8 +657,8 @@ class DropboxApi
         $body = $response->getDecodedBody();
 
         //Response doesn't have Metadata
-        if (!isset($body['metadata']) || !is_array($body['metadata'])) {
-            throw new DropboxClientException("Invalid Response.");
+        if (! isset($body['metadata']) || ! is_array($body['metadata'])) {
+            throw new DropboxClientException('Invalid Response.');
         }
 
         //Make and return the Model
@@ -683,10 +668,9 @@ class DropboxApi
     /**
      * Get a temporary link to stream contents of a file
      *
-     * @param  string $path Path to the file you want a temporary link to
+     * @param  string  $path  Path to the file you want a temporary link to
      *
      * https://www.dropbox.com/developers/documentation/http/documentation#files-get_temporary_link
-     *
      * @return \Permafrost\Dropbox\Models\TemporaryLink
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
@@ -695,7 +679,7 @@ class DropboxApi
     {
         //Path cannot be null
         if (is_null($path)) {
-            throw new DropboxClientException("Path cannot be null.");
+            throw new DropboxClientException('Path cannot be null.');
         }
 
         //Get Temporary Link
@@ -708,29 +692,27 @@ class DropboxApi
     /**
      * Save a specified URL into a file in user's Dropbox
      *
-     * @param  string $path Path where the URL will be saved
-     * @param  string $url  URL to be saved
-     *
+     * @param  string  $path  Path where the URL will be saved
+     * @param  string  $url  URL to be saved
      * @return string Async Job ID
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-save_url
-     *
      */
     public function saveUrl($path, $url)
     {
         //Path and URL cannot be null
         if (is_null($path) || is_null($url)) {
-            throw new DropboxClientException("Path and URL cannot be null.");
+            throw new DropboxClientException('Path and URL cannot be null.');
         }
 
         //Save URL
         $response = $this->postToAPI('/files/save_url', ['path' => $path, 'url' => $url]);
         $body = $response->getDecodedBody();
 
-        if (!isset($body['async_job_id'])) {
-            throw new DropboxClientException("Could not retrieve Async Job ID.");
+        if (! isset($body['async_job_id'])) {
+            throw new DropboxClientException('Could not retrieve Async Job ID.');
         }
 
         //Return the Async Job ID
@@ -740,20 +722,18 @@ class DropboxApi
     /**
      * Save a specified URL into a file in user's Dropbox
      *
-     * @param $asyncJobId
      *
      * @return \Permafrost\Dropbox\Models\FileMetadata|string Status (failed|in_progress) or FileMetadata (if complete)
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link     https://www.dropbox.com/developers/documentation/http/documentation#files-save_url-check_job_status
-     *
      */
     public function checkJobStatus($asyncJobId)
     {
         //Async Job ID cannot be null
         if (is_null($asyncJobId)) {
-            throw new DropboxClientException("Async Job ID cannot be null.");
+            throw new DropboxClientException('Async Job ID cannot be null.');
         }
 
         //Get Job Status
@@ -775,13 +755,14 @@ class DropboxApi
     /**
      * Upload a File to Dropbox
      *
-     * @param  string|DropboxFile $dropboxFile DropboxFile object or Path to file
-     * @param  string $path Path to upload the file to
-     * @param  array $params Additional Params
+     * @param  string|DropboxFile  $dropboxFile  DropboxFile object or Path to file
+     * @param  string  $path  Path to upload the file to
+     * @param  array  $params  Additional Params
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload
      *
      * @return \Permafrost\Dropbox\Models\FileMetadata
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function upload($dropboxFile, $path, array $params = [])
@@ -802,17 +783,16 @@ class DropboxApi
     /**
      * Make DropboxFile Object
      *
-     * @param  string|DropboxFile $dropboxFile DropboxFile object or Path to file
-     * @param  int                $maxLength   Max Bytes to read from the file
-     * @param  int                $offset      Seek to specified offset before reading
-     * @param  string             $mode        The type of access
-     *
+     * @param  string|DropboxFile  $dropboxFile  DropboxFile object or Path to file
+     * @param  int  $maxLength  Max Bytes to read from the file
+     * @param  int  $offset  Seek to specified offset before reading
+     * @param  string  $mode  The type of access
      * @return \Permafrost\Dropbox\DropboxFile
      */
     public function makeDropboxFile($dropboxFile, $maxLength = null, $offset = null, $mode = DropboxFile::MODE_READ)
     {
         //Uploading file by file path
-        if (!$dropboxFile instanceof DropboxFile) {
+        if (! $dropboxFile instanceof DropboxFile) {
             //Create a DropboxFile Object
             $dropboxFile = new DropboxFile($dropboxFile, $mode);
         } elseif ($mode !== $dropboxFile->getMode()) {
@@ -821,11 +801,11 @@ class DropboxApi
             $dropboxFile = new DropboxFile($dropboxFile->getFilePath(), $mode);
         }
 
-        if (!is_null($offset)) {
+        if (! is_null($offset)) {
             $dropboxFile->setOffset($offset);
         }
 
-        if (!is_null($maxLength)) {
+        if (! is_null($maxLength)) {
             $dropboxFile->setMaxLength($maxLength);
         }
 
@@ -836,20 +816,21 @@ class DropboxApi
     /**
      * Upload file in sessions/chunks
      *
-     * @param  string|DropboxFile $dropboxFile DropboxFile object or Path to file
-     * @param  string $path Path to save the file to, on Dropbox
-     * @param  int $fileSize The size of the file
-     * @param  int $chunkSize The amount of data to upload in each chunk
-     * @param  array $params Additional Params
+     * @param  string|DropboxFile  $dropboxFile  DropboxFile object or Path to file
+     * @param  string  $path  Path to save the file to, on Dropbox
+     * @param  int  $fileSize  The size of the file
+     * @param  int  $chunkSize  The amount of data to upload in each chunk
+     * @param  array  $params  Additional Params
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload_session-start
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload_session-finish
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload_session-append_v2
      *
      * @return \Permafrost\Dropbox\Models\FileMetadata
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
-    public function uploadChunked($dropboxFile, $path, $fileSize = null, $chunkSize = null, array $params = array())
+    public function uploadChunked($dropboxFile, $path, $fileSize = null, $chunkSize = null, array $params = [])
     {
         //Make Dropbox File
         $dropboxFile = $this->makeDropboxFile($dropboxFile);
@@ -902,16 +883,14 @@ class DropboxApi
     /**
      * Start an Upload Session
      *
-     * @param  string|DropboxFile $dropboxFile DropboxFile object or Path to file
-     * @param  int                $chunkSize   Size of file chunk to upload
-     * @param  boolean            $close       Closes the session for "appendUploadSession"
-     *
+     * @param  string|DropboxFile  $dropboxFile  DropboxFile object or Path to file
+     * @param  int  $chunkSize  Size of file chunk to upload
+     * @param  bool  $close  Closes the session for "appendUploadSession"
      * @return string Unique identifier for the upload session
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload_session-start
-     *
      */
     public function startUploadSession($dropboxFile, $chunkSize = -1, $close = false)
     {
@@ -921,7 +900,7 @@ class DropboxApi
         //Set the close param
         $params = [
             'close' => $close ? true : false,
-            'file' => $dropboxFile
+            'file' => $dropboxFile,
         ];
 
         //Upload File
@@ -929,8 +908,8 @@ class DropboxApi
         $body = $file->getDecodedBody();
 
         //Cannot retrieve Session ID
-        if (!isset($body['session_id'])) {
-            throw new DropboxClientException("Could not retrieve Session ID.");
+        if (! isset($body['session_id'])) {
+            throw new DropboxClientException('Could not retrieve Session ID.');
         }
 
         //Return the Session ID
@@ -940,34 +919,32 @@ class DropboxApi
     /**
      * Make a HTTP POST Request to the Content endpoint type
      *
-     * @param  string $endpoint Content Endpoint to send Request to
-     * @param  array $params Request Query Params
-     * @param  string $accessToken Access Token to send with the Request
-     * @param  DropboxFile $responseFile Save response to the file
-     *
+     * @param  string  $endpoint  Content Endpoint to send Request to
+     * @param  array  $params  Request Query Params
+     * @param  string  $accessToken  Access Token to send with the Request
+     * @param  DropboxFile  $responseFile  Save response to the file
      * @return \Permafrost\Dropbox\DropboxResponse
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
-    public function postToContent($endpoint, array $params = [], $accessToken = null, DropboxFile $responseFile = null)
+    public function postToContent($endpoint, array $params = [], $accessToken = null, ?DropboxFile $responseFile = null)
     {
-        return $this->sendRequest("POST", $endpoint, 'content', $params, $accessToken, $responseFile);
+        return $this->sendRequest('POST', $endpoint, 'content', $params, $accessToken, $responseFile);
     }
 
     /**
      * Append more data to an Upload Session
      *
-     * @param  string|DropboxFile $dropboxFile DropboxFile object or Path to file
-     * @param  string             $sessionId   Session ID returned by `startUploadSession`
-     * @param  int                $offset      The amount of data that has been uploaded so far
-     * @param  int                $chunkSize   The amount of data to upload
-     * @param  boolean            $close       Closes the session for futher "appendUploadSession" calls
-     *
+     * @param  string|DropboxFile  $dropboxFile  DropboxFile object or Path to file
+     * @param  string  $sessionId  Session ID returned by `startUploadSession`
+     * @param  int  $offset  The amount of data that has been uploaded so far
+     * @param  int  $chunkSize  The amount of data to upload
+     * @param  bool  $close  Closes the session for futher "appendUploadSession" calls
      * @return string Unique identifier for the upload session
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload_session-append_v2
-     *
      */
     public function appendUploadSession($dropboxFile, $sessionId, $offset, $chunkSize, $close = false)
     {
@@ -976,7 +953,7 @@ class DropboxApi
 
         //Session ID, offset, chunkSize and path cannot be null
         if (is_null($sessionId) || is_null($offset) || is_null($chunkSize)) {
-            throw new DropboxClientException("Session ID, offset and chunk size cannot be null");
+            throw new DropboxClientException('Session ID, offset and chunk size cannot be null');
         }
 
         $params = [];
@@ -1005,19 +982,17 @@ class DropboxApi
     /**
      * Finish an upload session and save the uploaded data to the given file path
      *
-     * @param  string|DropboxFile $dropboxFile DropboxFile object or Path to file
-     * @param  string             $sessionId   Session ID returned by `startUploadSession`
-     * @param  int                $offset      The amount of data that has been uploaded so far
-     * @param  int                $remaining   The amount of data that is remaining
-     * @param  string             $path        Path to save the file to, on Dropbox
-     * @param  array              $params      Additional Params
-     *
+     * @param  string|DropboxFile  $dropboxFile  DropboxFile object or Path to file
+     * @param  string  $sessionId  Session ID returned by `startUploadSession`
+     * @param  int  $offset  The amount of data that has been uploaded so far
+     * @param  int  $remaining  The amount of data that is remaining
+     * @param  string  $path  Path to save the file to, on Dropbox
+     * @param  array  $params  Additional Params
      * @return \Permafrost\Dropbox\Models\FileMetadata
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload_session-finish
-     *
      */
     public function finishUploadSession($dropboxFile, $sessionId, $offset, $remaining, $path, array $params = [])
     {
@@ -1026,7 +1001,7 @@ class DropboxApi
 
         //Session ID, offset, remaining and path cannot be null
         if (is_null($sessionId) || is_null($path) || is_null($offset) || is_null($remaining)) {
-            throw new DropboxClientException("Session ID, offset, remaining and path cannot be null");
+            throw new DropboxClientException('Session ID, offset, remaining and path cannot be null');
         }
 
         $queryParams = [];
@@ -1053,13 +1028,14 @@ class DropboxApi
     /**
      * Upload a File to Dropbox in a single request
      *
-     * @param  string|DropboxFile $dropboxFile DropboxFile object or Path to file
-     * @param  string $path Path to upload the file to
-     * @param  array $params Additional Params
+     * @param  string|DropboxFile  $dropboxFile  DropboxFile object or Path to file
+     * @param  string  $path  Path to upload the file to
+     * @param  array  $params  Additional Params
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload
      *
      * @return \Permafrost\Dropbox\Models\FileMetadata
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function simpleUpload($dropboxFile, $path, array $params = [])
@@ -1082,26 +1058,24 @@ class DropboxApi
     /**
      * Get a thumbnail for an image
      *
-     * @param  string $path   Path to the file you want a thumbnail to
-     * @param  string $size   Size for the thumbnail image ['thumb','small','medium','large','huge']
-     * @param  string $format Format for the thumbnail image ['jpeg'|'png']
-     *
+     * @param  string  $path  Path to the file you want a thumbnail to
+     * @param  string  $size  Size for the thumbnail image ['thumb','small','medium','large','huge']
+     * @param  string  $format  Format for the thumbnail image ['jpeg'|'png']
      * @return \Permafrost\Dropbox\Models\Thumbnail
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-get_thumbnail
-     *
      */
     public function getThumbnail($path, $size = 'small', $format = 'jpeg')
     {
         //Path cannot be null
         if (is_null($path)) {
-            throw new DropboxClientException("Path cannot be null.");
+            throw new DropboxClientException('Path cannot be null.');
         }
 
         //Invalid Format
-        if (!in_array($format, ['jpeg', 'png'])) {
+        if (! in_array($format, ['jpeg', 'png'])) {
             throw new DropboxClientException("Invalid format. Must either be 'jpeg' or 'png'.");
         }
 
@@ -1124,8 +1098,7 @@ class DropboxApi
     /**
      * Get thumbnail size
      *
-     * @param  string $size Thumbnail Size
-     *
+     * @param  string  $size  Thumbnail Size
      * @return string
      */
     protected function getThumbnailSize($size)
@@ -1135,7 +1108,7 @@ class DropboxApi
             'small' => 'w64h64',
             'medium' => 'w128h128',
             'large' => 'w640h480',
-            'huge' => 'w1024h768'
+            'huge' => 'w1024h768',
         ];
 
         return isset($thumbnailSizes[$size]) ? $thumbnailSizes[$size] : $thumbnailSizes['small'];
@@ -1144,7 +1117,6 @@ class DropboxApi
     /**
      * Get metadata from response headers
      *
-     * @param  DropboxResponse $response
      *
      * @return array
      */
@@ -1170,7 +1142,7 @@ class DropboxApi
 
             //Since the metadata is returned as a json string
             //it needs to be decoded into an associative array
-            $metadata = json_decode((string)$data, true);
+            $metadata = json_decode((string) $data, true);
         }
 
         //Return the metadata
@@ -1180,21 +1152,19 @@ class DropboxApi
     /**
      * Download a File
      *
-     * @param  string                  $path        Path to the file you want to download
-     * @param  null|string|DropboxFile $dropboxFile DropboxFile object or Path to target file
-     *
+     * @param  string  $path  Path to the file you want to download
+     * @param  null|string|DropboxFile  $dropboxFile  DropboxFile object or Path to target file
      * @return \Permafrost\Dropbox\Models\File
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-download
-     *
      */
     public function download($path, $dropboxFile = null)
     {
         //Path cannot be null
         if (is_null($path)) {
-            throw new DropboxClientException("Path cannot be null.");
+            throw new DropboxClientException('Path cannot be null.');
         }
 
         //Make Dropbox File if target is specified
@@ -1219,6 +1189,7 @@ class DropboxApi
      * @link https://www.dropbox.com/developers/documentation/http/documentation#users-get_current_account
      *
      * @return \Permafrost\Dropbox\Models\Account
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getCurrentAccount()
@@ -1234,11 +1205,12 @@ class DropboxApi
     /**
      * Get Account
      *
-     * @param string $account_id Account ID of the account to get details for
+     * @param  string  $account_id  Account ID of the account to get details for
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#users-get_account
      *
      * @return \Permafrost\Dropbox\Models\Account
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getAccount($account_id)
@@ -1254,11 +1226,12 @@ class DropboxApi
     /**
      * Get Multiple Accounts in one call
      *
-     * @param array $account_ids IDs of the accounts to get details for
+     * @param  array  $account_ids  IDs of the accounts to get details for
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#users-get_account_batch
      *
      * @return \Permafrost\Dropbox\Models\AccountList
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getAccounts(array $account_ids = [])
@@ -1277,6 +1250,7 @@ class DropboxApi
      * @link https://www.dropbox.com/developers/documentation/http/documentation#users-get_space_usage
      *
      * @return array
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getSpaceUsage()

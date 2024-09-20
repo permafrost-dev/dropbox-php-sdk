@@ -1,11 +1,11 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 use Permafrost\Dropbox\DropboxFile;
 
 class File extends BaseModel
 {
-
     /**
      * The file contents
      *
@@ -20,12 +20,10 @@ class File extends BaseModel
      */
     protected $metadata;
 
-
     /**
      * Create a new File instance
      *
-     * @param array  $data
-     * @param string|DropboxFile $contents
+     * @param  string|DropboxFile  $contents
      */
     public function __construct(array $data, $contents)
     {
@@ -48,6 +46,7 @@ class File extends BaseModel
      * Get the file contents
      *
      * @return string
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getContents()
@@ -55,6 +54,7 @@ class File extends BaseModel
         if ($this->contents instanceof DropboxFile) {
             return $this->contents->getContents();
         }
+
         return $this->contents;
     }
 }

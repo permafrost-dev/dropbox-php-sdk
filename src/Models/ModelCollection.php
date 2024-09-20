@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 use Illuminate\Support\Collection;

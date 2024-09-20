@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox;
 
 class DropboxResponseToFile extends DropboxResponse
@@ -11,10 +12,7 @@ class DropboxResponseToFile extends DropboxResponse
     /**
      * Create a new DropboxResponse instance
      *
-     * @param DropboxRequest $request
-     * @param DropboxFile $file
-     * @param int|null    $httpStatusCode
-     * @param array       $headers
+     * @param  int|null  $httpStatusCode
      */
     public function __construct(DropboxRequest $request, DropboxFile $file, $httpStatusCode = null, array $headers = [])
     {

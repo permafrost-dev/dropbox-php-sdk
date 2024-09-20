@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox;
 
 use Permafrost\Dropbox\Http\Clients\DropboxHttpClientInterface;
@@ -31,8 +32,6 @@ class DropboxClient
 
     /**
      * Create a new DropboxClient instance
-     *
-     * @param DropboxHttpClientInterface $httpClient
      */
     public function __construct(DropboxHttpClientInterface $httpClient)
     {
@@ -53,7 +52,6 @@ class DropboxClient
     /**
      * Set the HTTP Client
      *
-     * @param \Permafrost\Dropbox\Http\Clients\DropboxHttpClientInterface $httpClient
      *
      * @return \Permafrost\Dropbox\DropboxClient
      */
@@ -87,23 +85,21 @@ class DropboxClient
     /**
      * Get the Authorization Header with the Access Token.
      *
-     * @param string $accessToken Access Token
-     *
+     * @param  string  $accessToken  Access Token
      * @return array Authorization Header
      */
-    protected function buildAuthHeader($accessToken = "")
+    protected function buildAuthHeader($accessToken = '')
     {
-        return ['Authorization' => 'Bearer '. $accessToken];
+        return ['Authorization' => 'Bearer '.$accessToken];
     }
 
     /**
      * Get the Content Type Header.
      *
-     * @param string $contentType Request Content Type
-     *
+     * @param  string  $contentType  Request Content Type
      * @return array Content Type Header
      */
-    protected function buildContentTypeHeader($contentType = "")
+    protected function buildContentTypeHeader($contentType = '')
     {
         return ['Content-Type' => $contentType];
     }
@@ -111,8 +107,8 @@ class DropboxClient
     /**
      * Build URL for the Request
      *
-     * @param string $endpoint Relative API endpoint
-     * @param string $type Endpoint Type
+     * @param  string  $endpoint  Relative API endpoint
+     * @param  string  $type  Endpoint Type
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#formats Request and response formats
      *
@@ -130,26 +126,24 @@ class DropboxClient
         }
 
         //Join and return the base and api path/endpoint
-        return $base . $endpoint;
+        return $base.$endpoint;
     }
 
     /**
      * Send the Request to the Server and return the Response
      *
-     * @param  DropboxRequest $request
-     * @param  DropboxResponse $response
      *
      * @return \Permafrost\Dropbox\DropboxResponse
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
-    public function sendRequest(DropboxRequest $request, DropboxResponse $response = null)
+    public function sendRequest(DropboxRequest $request, ?DropboxResponse $response = null)
     {
         //Method
         $method = $request->getMethod();
 
         //Prepare Request
-        list($url, $headers, $requestBody) = $this->prepareRequest($request);
+        [$url, $headers, $requestBody] = $this->prepareRequest($request);
 
         $options = [];
         if ($response instanceof DropboxResponseToFile) {
@@ -164,7 +158,7 @@ class DropboxClient
         $response = $response ?: new DropboxResponse($request);
         $response->setHttpStatusCode($rawResponse->getHttpResponseCode());
         $response->setHeaders($rawResponse->getHeaders());
-        if (!$response instanceof DropboxResponseToFile) {
+        if (! $response instanceof DropboxResponseToFile) {
             $response->setBody($rawResponse->getBody());
         }
 
@@ -175,7 +169,6 @@ class DropboxClient
     /**
      * Prepare a Request before being sent to the HTTP Client
      *
-     * @param  \Permafrost\Dropbox\DropboxRequest $request
      *
      * @return array [Request URL, Request Headers, Request Body]
      */
@@ -193,7 +186,7 @@ class DropboxClient
             //If a File is also being uploaded
             if ($request->hasFile()) {
                 //Content Type
-                $request->setContentType("application/octet-stream");
+                $request->setContentType('application/octet-stream');
 
                 //Request Body (File Contents)
                 $requestBody = $request->getStreamBody()->getBody();
@@ -210,7 +203,7 @@ class DropboxClient
         //Empty body
         if (is_null($requestBody)) {
             //Content Type needs to be kept empty
-            $request->setContentType("");
+            $request->setContentType('');
         }
 
         //Build headers

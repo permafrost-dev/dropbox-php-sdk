@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Http;
 
 /**
@@ -6,7 +7,6 @@ namespace Permafrost\Dropbox\Http;
  */
 class RequestBodyJsonEncoded implements RequestBodyInterface
 {
-
     /**
      * Request Params
      *
@@ -17,7 +17,7 @@ class RequestBodyJsonEncoded implements RequestBodyInterface
     /**
      * Create a new RequestBodyJsonEncoded instance
      *
-     * @param array $params Request Params
+     * @param  array  $params  Request Params
      */
     public function __construct(array $params = [])
     {

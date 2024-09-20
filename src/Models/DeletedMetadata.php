@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class DeletedMetadata extends BaseModel
 {
-
     /**
      * The last component of the path (including extension)
      *
@@ -28,14 +28,12 @@ class DeletedMetadata extends BaseModel
     /**
      * The cased path to be used for display purposes only.
      *
-     *  @var string
+     * @var string
      */
     protected $path_display;
 
     /**
      * Create a new DeletedtMetadata instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

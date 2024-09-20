@@ -1,10 +1,11 @@
 <?php
+
 namespace Permafrost\Dropbox\Security;
 
 use Permafrost\Dropbox\Exceptions\DropboxClientException;
 
 /**
- * @inheritdoc
+ * {@inheritdoc}
  */
 class McryptRandomStringGenerator implements RandomStringGeneratorInterface
 {
@@ -24,9 +25,9 @@ class McryptRandomStringGenerator implements RandomStringGeneratorInterface
      */
     public function __construct()
     {
-        if (!function_exists('mcrypt_create_iv')) {
+        if (! function_exists('mcrypt_create_iv')) {
             throw new DropboxClientException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'The function mcrypt_create_iv() does not exist.'
             );
         }
@@ -35,11 +36,10 @@ class McryptRandomStringGenerator implements RandomStringGeneratorInterface
     /**
      * Get a randomly generated secure token
      *
-     * @param  int $length Length of the string to return
+     * @param  int  $length  Length of the string to return
+     * @return string
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
-     *
-     * @return string
      */
     public function generateString($length)
     {
@@ -49,7 +49,7 @@ class McryptRandomStringGenerator implements RandomStringGeneratorInterface
         //Unable to create binary string
         if ($binaryString === false) {
             throw new DropboxClientException(
-                static::ERROR_MESSAGE .
+                static::ERROR_MESSAGE.
                 'mcrypt_create_iv() returned an error.'
             );
         }

@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class MetadataCollection extends BaseModel
 {
-
     /**
      * Collection Items Key
      *
@@ -49,14 +49,14 @@ class MetadataCollection extends BaseModel
     /**
      * If more items are available
      *
-     * @var boolean
+     * @var bool
      */
     protected $hasMoreItems;
 
     /**
      * Create a new Metadata Collection
      *
-     * @param array $data Collection Data
+     * @param  array  $data  Collection Data
      */
     public function __construct(array $data)
     {
@@ -122,7 +122,7 @@ class MetadataCollection extends BaseModel
     /**
      * More items are available
      *
-     * @return boolean
+     * @return bool
      */
     public function hasMoreItems()
     {
@@ -133,8 +133,7 @@ class MetadataCollection extends BaseModel
      * Process items and cast them
      * to their respective Models
      *
-     * @param array $items Unprocessed Items
-     *
+     * @param  array  $items  Unprocessed Items
      * @return void
      */
     protected function processItems(array $items)

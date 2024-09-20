@@ -1,8 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Http\Clients;
 
-use InvalidArgumentException;
 use GuzzleHttp\Client as Guzzle;
+use InvalidArgumentException;
 
 /**
  * DropboxHttpClientFactory
@@ -12,15 +13,14 @@ class DropboxHttpClientFactory
     /**
      * Make HTTP Client
      *
-     * @param  \Permafrost\Dropbox\Http\Clients\DropboxHttpClientInterface|\GuzzleHttp\Client|null $handler
-     *
+     * @param  \Permafrost\Dropbox\Http\Clients\DropboxHttpClientInterface|\GuzzleHttp\Client|null  $handler
      * @return \Permafrost\Dropbox\Http\Clients\DropboxHttpClientInterface
      */
     public static function make($handler)
     {
         //No handler specified
-        if (!$handler) {
-            return new DropboxGuzzleHttpClient();
+        if (! $handler) {
+            return new DropboxGuzzleHttpClient;
         }
 
         //Custom Implementation, maybe.

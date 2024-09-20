@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Http;
 
 use Permafrost\Dropbox\DropboxFile;
@@ -8,7 +9,6 @@ use Permafrost\Dropbox\DropboxFile;
  */
 class RequestBodyStream implements RequestBodyInterface
 {
-
     /**
      * File to be sent with the Request
      *
@@ -18,8 +18,6 @@ class RequestBodyStream implements RequestBodyInterface
 
     /**
      * Create a new RequestBodyStream instance
-     *
-     * @param \Permafrost\Dropbox\DropboxFile $file
      */
     public function __construct(DropboxFile $file)
     {

@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class BaseModel implements ModelInterface
 {
-
     /**
      * Model Data
      *
@@ -13,8 +13,6 @@ class BaseModel implements ModelInterface
 
     /**
      * Create a new Model instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {
@@ -34,8 +32,7 @@ class BaseModel implements ModelInterface
     /**
      * Get Data Property
      *
-     * @param  string $property
-     *
+     * @param  string  $property
      * @return mixed
      */
     public function getDataProperty($property)
@@ -49,8 +46,7 @@ class BaseModel implements ModelInterface
      * same as the property, is available
      * on the data property.
      *
-     * @param  string $property
-     *
+     * @param  string  $property
      * @return mixed|null
      */
     public function __get($property)
@@ -67,9 +63,8 @@ class BaseModel implements ModelInterface
      * Sets an item with the defined value
      * on the data property.
      *
-     * @param  string $property
-     * @param  string $value
-     *
+     * @param  string  $property
+     * @param  string  $value
      * @return mixed|null
      */
     public function __set($property, $value)

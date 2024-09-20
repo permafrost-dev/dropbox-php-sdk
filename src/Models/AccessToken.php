@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class AccessToken extends BaseModel
@@ -61,8 +62,6 @@ class AccessToken extends BaseModel
 
     /**
      * Create a new AccessToken instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

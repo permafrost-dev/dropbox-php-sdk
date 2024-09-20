@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class AccountList extends ModelCollection
@@ -6,7 +7,7 @@ class AccountList extends ModelCollection
     /**
      * Create a new Metadata Collection
      *
-     * @param array $data Collection Data
+     * @param  array  $data  Collection Data
      */
     public function __construct(array $data)
     {
@@ -18,8 +19,7 @@ class AccountList extends ModelCollection
      * Process items and cast them
      * to Account Model
      *
-     * @param array $items Unprocessed Items
-     *
+     * @param  array  $items  Unprocessed Items
      * @return array Array of Account models
      */
     protected function processItems(array $items)

@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox;
 
 class DropboxApp
 {
-
     /**
      * The Client ID of the App
      *
@@ -32,9 +32,9 @@ class DropboxApp
     /**
      * Create a new Dropbox instance
      *
-     * @param string $clientId     Application Client ID
-     * @param string $clientSecret Application Client Secret
-     * @param string $accessToken  Access Token
+     * @param  string  $clientId  Application Client ID
+     * @param  string  $clientSecret  Application Client Secret
+     * @param  string  $accessToken  Access Token
      */
     public function __construct($clientId, $clientSecret, $accessToken = null)
     {

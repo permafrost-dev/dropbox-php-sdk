@@ -1,6 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
-class Thumbnail extends File
-{
-}
+class Thumbnail extends File {}

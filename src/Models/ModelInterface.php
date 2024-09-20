@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 interface ModelInterface
 {
-
     /**
      * Get the Model data
      *
@@ -14,8 +14,7 @@ interface ModelInterface
     /**
      * Get Data Property
      *
-     * @param  string $property
-     *
+     * @param  string  $property
      * @return mixed
      */
     public function getDataProperty($property);

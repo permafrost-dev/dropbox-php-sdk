@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Authentication;
 
 use Permafrost\Dropbox\DropboxApp;
@@ -8,20 +9,19 @@ use Permafrost\Dropbox\Security\RandomStringGeneratorInterface;
 
 class OAuth2Client
 {
-
     /**
      * The Base URL
      *
      * @const string
      */
-    const BASE_URL = "https://dropbox.com";
+    const BASE_URL = 'https://dropbox.com';
 
     /**
      * Auth Token URL
      *
      * @const string
      */
-    const AUTH_TOKEN_URL = "https://api.dropboxapi.com/oauth2/token";
+    const AUTH_TOKEN_URL = 'https://api.dropboxapi.com/oauth2/token';
 
     /**
      * The Dropbox App
@@ -46,12 +46,8 @@ class OAuth2Client
 
     /**
      * Create a new DropboxApp instance
-     *
-     * @param \Permafrost\Dropbox\DropboxApp $app
-     * @param \Permafrost\Dropbox\DropboxClient $client
-     * @param \Permafrost\Dropbox\Security\RandomStringGeneratorInterface $randStrGenerator
      */
-    public function __construct(DropboxApp $app, DropboxClient $client, RandomStringGeneratorInterface $randStrGenerator = null)
+    public function __construct(DropboxApp $app, DropboxClient $client, ?RandomStringGeneratorInterface $randStrGenerator = null)
     {
         $this->app = $app;
         $this->client = $client;
@@ -61,15 +57,15 @@ class OAuth2Client
     /**
      * Build URL
      *
-     * @param  string $endpoint
-     * @param  array  $params   Query Params
-     *
+     * @param  string  $endpoint
+     * @param  array  $params  Query Params
      * @return string
      */
     protected function buildUrl($endpoint = '', array $params = [])
     {
         $queryParams = http_build_query($params, '', '&');
-        return static::BASE_URL . $endpoint . '?' . $queryParams;
+
+        return static::BASE_URL.$endpoint.'?'.$queryParams;
     }
 
     /**
@@ -95,13 +91,13 @@ class OAuth2Client
     /**
      * Get the OAuth2 Authorization URL
      *
-     * @param string $redirectUri Callback URL to redirect user after authorization.
-     *                            If null is passed, redirect_uri will be omitted
-     *                            from the url and the code will be presented directly
-     *                            to the user.
-     * @param string $state       CSRF Token
-     * @param array  $params      Additional Params
-     * @param string $tokenAccessType Either `offline` or `online` or null
+     * @param  string  $redirectUri  Callback URL to redirect user after authorization.
+     *                               If null is passed, redirect_uri will be omitted
+     *                               from the url and the code will be presented directly
+     *                               to the user.
+     * @param  string  $state  CSRF Token
+     * @param  array  $params  Additional Params
+     * @param  string  $tokenAccessType  Either `offline` or `online` or null
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#oauth2-authorize
      *
@@ -117,7 +113,7 @@ class OAuth2Client
             'token_access_type' => $tokenAccessType,
         ], $params);
 
-        if (!is_null($redirectUri)) {
+        if (! is_null($redirectUri)) {
             $params['redirect_uri'] = $redirectUri;
         }
 
@@ -127,11 +123,11 @@ class OAuth2Client
     /**
      * Get Access Token
      *
-     * @param  string $code Authorization Code | Refresh Token
-     * @param  string $redirectUri Redirect URI used while getAuthorizationUrl
-     * @param  string $grant_type Grant Type ['authorization_code' | 'refresh_token']
-     *
+     * @param  string  $code  Authorization Code | Refresh Token
+     * @param  string  $redirectUri  Redirect URI used while getAuthorizationUrl
+     * @param  string  $grant_type  Grant Type ['authorization_code' | 'refresh_token']
      * @return array
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getAccessToken($code, $redirectUri = null, $grant_type = 'authorization_code')
@@ -158,13 +154,13 @@ class OAuth2Client
         $params = http_build_query($params, '', '&');
 
         $apiUrl = static::AUTH_TOKEN_URL;
-        $uri = $apiUrl . "?" . $params;
+        $uri = $apiUrl.'?'.$params;
 
         //Send Request through the DropboxClient
         //Fetch the Response (DropboxRawResponse)
         $response = $this->getClient()
             ->getHttpClient()
-            ->send($uri, "POST", null);
+            ->send($uri, 'POST', null);
 
         //Fetch Response Body
         $body = $response->getBody();
@@ -178,6 +174,7 @@ class OAuth2Client
      * Disables the access token
      *
      * @return void
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function revokeAccessToken()
@@ -186,7 +183,7 @@ class OAuth2Client
         $accessToken = $this->getApp()->getAccessToken();
 
         //Request
-        $request = new DropboxRequest("POST", "/auth/token/revoke", $accessToken);
+        $request = new DropboxRequest('POST', '/auth/token/revoke', $accessToken);
         // Do not validate the response
         // since the /token/revoke endpoint
         // doesn't return anything in the response.

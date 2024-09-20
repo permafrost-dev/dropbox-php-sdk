@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class SearchResult extends BaseModel
 {
-
     /**
      * Indicates what type of match was found for the result
      *
@@ -18,11 +18,8 @@ class SearchResult extends BaseModel
      */
     protected $metadata;
 
-
     /**
      * Create a new SearchResult instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

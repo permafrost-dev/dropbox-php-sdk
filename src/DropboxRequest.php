@@ -2,15 +2,14 @@
 
 namespace Permafrost\Dropbox;
 
-use Permafrost\Dropbox\Http\RequestBodyStream;
 use Permafrost\Dropbox\Http\RequestBodyJsonEncoded;
+use Permafrost\Dropbox\Http\RequestBodyStream;
 
 /**
  * DropboxRequest
  */
 class DropboxRequest
 {
-
     /**
      * Access Token to use for this request
      *
@@ -23,7 +22,7 @@ class DropboxRequest
      *
      * @var string
      */
-    protected $method = "GET";
+    protected $method = 'GET';
 
     /**
      * The params for this request
@@ -73,22 +72,21 @@ class DropboxRequest
      * Set this to false when an endpoint or
      * request has no return values.
      *
-     * @var boolean
+     * @var bool
      */
     protected $validateResponse = true;
-
 
     /**
      * Create a new DropboxRequest instance
      *
-     * @param string $method       HTTP Method of the Request
-     * @param string $endpoint     API endpoint of the Request
-     * @param string $accessToken  Access Token for the Request
-     * @param string $endpointType Endpoint type ['api'|'content']
-     * @param mixed  $params       Request Params
-     * @param array  $headers      Headers to send along with the Request
+     * @param  string  $method  HTTP Method of the Request
+     * @param  string  $endpoint  API endpoint of the Request
+     * @param  string  $accessToken  Access Token for the Request
+     * @param  string  $endpointType  Endpoint type ['api'|'content']
+     * @param  mixed  $params  Request Params
+     * @param  array  $headers  Headers to send along with the Request
      */
-    public function __construct($method, $endpoint, $accessToken, $endpointType = "api", array $params = [], array $headers = [], $contentType = null)
+    public function __construct($method, $endpoint, $accessToken, $endpointType = 'api', array $params = [], array $headers = [], $contentType = null)
     {
         $this->setMethod($method);
         $this->setEndpoint($endpoint);
@@ -116,7 +114,6 @@ class DropboxRequest
      * Set the Request Method
      *
      * @param string
-     *
      * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function setMethod($method)
@@ -140,7 +137,6 @@ class DropboxRequest
      * Set Access Token for the Request
      *
      * @param string
-     *
      * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function setAccessToken($accessToken)
@@ -164,7 +160,6 @@ class DropboxRequest
      * Set the Endpoint of the Request
      *
      * @param string
-     *
      * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function setEndpoint($endpoint)
@@ -188,7 +183,6 @@ class DropboxRequest
      * Set the Endpoint Type of the Request
      *
      * @param string
-     *
      * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function setEndpointType($endpointType)
@@ -212,7 +206,6 @@ class DropboxRequest
      * Set the Content Type of the Request
      *
      * @param string
-     *
      * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function setContentType($contentType)
@@ -236,7 +229,6 @@ class DropboxRequest
      * Set Request Headers
      *
      * @param array
-     *
      * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function setHeaders(array $headers)
@@ -270,7 +262,6 @@ class DropboxRequest
      * Set the Request Params
      *
      * @param array
-     *
      * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function setParams(array $params = [])
@@ -309,7 +300,6 @@ class DropboxRequest
      * Set the File to be sent with the Request
      *
      * @param \Permafrost\Dropbox\DropboxFile
-     *
      * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function setFile(DropboxFile $file)
@@ -322,17 +312,17 @@ class DropboxRequest
     /**
      * Returns true if Request has file to be uploaded
      *
-     * @return boolean
+     * @return bool
      */
     public function hasFile()
     {
-        return !is_null($this->file) ? true : false;
+        return ! is_null($this->file) ? true : false;
     }
 
     /**
      * Whether to validate response or not
      *
-     * @return boolean
+     * @return bool
      */
     public function validateResponse()
     {
@@ -342,8 +332,7 @@ class DropboxRequest
     /**
      * Process Params for the File parameter
      *
-     * @param  array $params Request Params
-     *
+     * @param  array  $params  Request Params
      * @return array
      */
     protected function processParams(array $params)

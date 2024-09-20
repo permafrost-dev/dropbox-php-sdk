@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class FileMetadata extends BaseModel
 {
-
     /**
      * A unique identifier of the file
      *
@@ -97,11 +97,8 @@ class FileMetadata extends BaseModel
      */
     protected $has_explicit_shared_members;
 
-
     /**
      * Create a new FileMetadata instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

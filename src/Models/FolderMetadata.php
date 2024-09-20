@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class FolderMetadata extends BaseModel
 {
-
     /**
      * A unique identifier of the folder
      *
@@ -48,11 +48,8 @@ class FolderMetadata extends BaseModel
      */
     protected $path_display;
 
-
     /**
      * Create a new FolderMetadata instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

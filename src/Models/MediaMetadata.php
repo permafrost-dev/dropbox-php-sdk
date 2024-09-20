@@ -1,24 +1,24 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 use DateTime;
 
 class MediaMetadata extends BaseModel
 {
-
     /**
      * The GPS coordinate of the photo/video.
      *
      * @var array
      */
-    protected $location = array();
+    protected $location = [];
 
     /**
      * Dimension of the photo/video.
      *
      * @var array
      */
-    protected $dimensions = array();
+    protected $dimensions = [];
 
     /**
      * The timestamp when the photo/video is taken.
@@ -27,11 +27,8 @@ class MediaMetadata extends BaseModel
      */
     protected $time_taken;
 
-
     /**
      * Create a new MediaMetadata instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class MediaInfo extends BaseModel
 {
-
     /**
      * Indicate the photo/video is still under processing
      * and metadata is not available yet.
@@ -19,11 +19,8 @@ class MediaInfo extends BaseModel
      */
     protected $mediaMetadata;
 
-
     /**
      * Create a new MediaInfo instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

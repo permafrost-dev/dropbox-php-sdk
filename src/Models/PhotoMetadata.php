@@ -1,6 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
-class PhotoMetadata extends MediaMetadata
-{
-}
+class PhotoMetadata extends MediaMetadata {}

@@ -1,9 +1,9 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class TemporaryLink extends BaseModel
 {
-
     /**
      * The temporary link
      *
@@ -18,11 +18,8 @@ class TemporaryLink extends BaseModel
      */
     protected $metadata;
 
-
     /**
      * Create a new TemporaryLink instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {

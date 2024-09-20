@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox;
 
 use Permafrost\Dropbox\Exceptions\DropboxClientException;
@@ -43,10 +44,8 @@ class DropboxResponse
     /**
      * Create a new DropboxResponse instance
      *
-     * @param DropboxRequest $request
-     * @param string|null $body
-     * @param int|null    $httpStatusCode
-     * @param array       $headers
+     * @param  string|null  $body
+     * @param  int|null  $httpStatusCode
      */
     public function __construct(DropboxRequest $request, $body = null, $httpStatusCode = null, array $headers = [])
     {
@@ -57,7 +56,7 @@ class DropboxResponse
     }
 
     /**
-     * @param string $body
+     * @param  string  $body
      */
     public function setBody($body)
     {
@@ -65,16 +64,13 @@ class DropboxResponse
     }
 
     /**
-     * @param int $httpStatusCode
+     * @param  int  $httpStatusCode
      */
     public function setHttpStatusCode($httpStatusCode)
     {
         $this->httpStatusCode = $httpStatusCode;
     }
 
-    /**
-     * @param array $headers
-     */
     public function setHeaders(array $headers)
     {
         $this->headers = $headers;
@@ -104,6 +100,7 @@ class DropboxResponse
      * Get the Decoded Body
      *
      * @return array
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getDecodedBody()
@@ -149,9 +146,9 @@ class DropboxResponse
     /**
      * Decode the Body
      *
-     * @throws DropboxClientException
-     *
      * @return void
+     *
+     * @throws DropboxClientException
      */
     protected function decodeBody()
     {
@@ -179,7 +176,7 @@ class DropboxResponse
     {
         // If JSON cannot be decoded
         if ($this->decodedBody === null) {
-            throw new DropboxClientException("Invalid Response");
+            throw new DropboxClientException('Invalid Response');
         }
     }
 }

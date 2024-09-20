@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Exceptions;
 
 use Exception;
@@ -6,6 +7,4 @@ use Exception;
 /**
  * DropboxClientException
  */
-class DropboxClientException extends Exception
-{
-}
+class DropboxClientException extends Exception {}

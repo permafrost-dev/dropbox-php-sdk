@@ -1,10 +1,11 @@
 <?php
+
 namespace Permafrost\Dropbox\Authentication;
 
-use Permafrost\Dropbox\Models\AccessToken;
 use Permafrost\Dropbox\Exceptions\DropboxClientException;
-use Permafrost\Dropbox\Store\PersistentDataStoreInterface;
+use Permafrost\Dropbox\Models\AccessToken;
 use Permafrost\Dropbox\Security\RandomStringGeneratorInterface;
+use Permafrost\Dropbox\Store\PersistentDataStoreInterface;
 
 class DropboxAuthHelper
 {
@@ -45,15 +46,11 @@ class DropboxAuthHelper
 
     /**
      * Create a new DropboxAuthHelper instance
-     *
-     * @param \Permafrost\Dropbox\Authentication\OAuth2Client             $oAuth2Client
-     * @param \Permafrost\Dropbox\Security\RandomStringGeneratorInterface $randomStringGenerator
-     * @param \Permafrost\Dropbox\Store\PersistentDataStoreInterface      $persistentDataStore
      */
     public function __construct(
         OAuth2Client $oAuth2Client,
-        RandomStringGeneratorInterface $randomStringGenerator = null,
-        PersistentDataStoreInterface $persistentDataStore = null
+        ?RandomStringGeneratorInterface $randomStringGenerator = null,
+        ?PersistentDataStoreInterface $persistentDataStore = null
     ) {
         $this->oAuth2Client = $oAuth2Client;
         $this->randomStringGenerator = $randomStringGenerator;
@@ -105,10 +102,10 @@ class DropboxAuthHelper
     /**
      * Get Authorization URL
      *
-     * @param  string $redirectUri Callback URL to redirect to after authorization
-     * @param  array  $params      Additional Params
-     * @param  string $urlState  Additional User Provided State Data
-     * @param string $tokenAccessType Either `offline` or `online` or null
+     * @param  string  $redirectUri  Callback URL to redirect to after authorization
+     * @param  array  $params  Additional Params
+     * @param  string  $urlState  Additional User Provided State Data
+     * @param  string  $tokenAccessType  Either `offline` or `online` or null
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#oauth2-authorize
      *
@@ -126,7 +123,7 @@ class DropboxAuthHelper
         // Redirect URI is provided
         // thus, CSRF validation
         // needs to be handled.
-        if (!is_null($redirectUri)) {
+        if (! is_null($redirectUri)) {
             //Get CSRF State Token
             $state = $this->getCsrfToken();
 
@@ -134,8 +131,8 @@ class DropboxAuthHelper
             $this->getPersistentDataStore()->set('state', $state);
 
             //Additional User Provided State Data
-            if (!is_null($urlState)) {
-                $state .= "|";
+            if (! is_null($urlState)) {
+                $state .= '|';
                 $state .= $urlState;
             }
         }
@@ -147,8 +144,7 @@ class DropboxAuthHelper
     /**
      * Decode State to get the CSRF Token and the URL State
      *
-     * @param  string $state State
-     *
+     * @param  string  $state  State
      * @return array
      */
     protected function decodeState($state)
@@ -156,7 +152,7 @@ class DropboxAuthHelper
         $csrfToken = $state;
         $urlState = null;
 
-        $splitPos = strpos($state, "|");
+        $splitPos = strpos($state, '|');
 
         if ($splitPos !== false) {
             $csrfToken = substr($state, 0, $splitPos);
@@ -168,24 +164,24 @@ class DropboxAuthHelper
 
     /**
      * Validate CSRF Token
-     * @param  string $csrfToken CSRF Token
+     *
+     * @param  string  $csrfToken  CSRF Token
+     * @return void
      *
      * @throws DropboxClientException
-     *
-     * @return void
      */
     protected function validateCSRFToken($csrfToken)
     {
         $tokenInStore = $this->getPersistentDataStore()->get('state');
 
         //Unable to fetch CSRF Token
-        if (!$tokenInStore || !$csrfToken) {
-            throw new DropboxClientException("Invalid CSRF Token. Unable to validate CSRF Token.");
+        if (! $tokenInStore || ! $csrfToken) {
+            throw new DropboxClientException('Invalid CSRF Token. Unable to validate CSRF Token.');
         }
 
         //CSRF Token Mismatch
         if ($tokenInStore !== $csrfToken) {
-            throw new DropboxClientException("Invalid CSRF Token. CSRF Token Mismatch.");
+            throw new DropboxClientException('Invalid CSRF Token. CSRF Token Mismatch.');
         }
 
         //Clear the state store
@@ -195,11 +191,11 @@ class DropboxAuthHelper
     /**
      * Get Access Token
      *
-     * @param  string $code Authorization Code
-     * @param  string $state CSRF & URL State
-     * @param  string $redirectUri Redirect URI used while getAuthUrl
-     *
+     * @param  string  $code  Authorization Code
+     * @param  string  $state  CSRF & URL State
+     * @param  string  $redirectUri  Redirect URI used while getAuthUrl
      * @return \Permafrost\Dropbox\Models\AccessToken
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getAccessToken($code, $state = null, $redirectUri = null)
@@ -207,7 +203,7 @@ class DropboxAuthHelper
         // No state provided
         // Should probably be
         // handled explicitly
-        if (!is_null($state)) {
+        if (! is_null($state)) {
             //Decode the State
             $state = $this->decodeState($state);
 
@@ -231,8 +227,8 @@ class DropboxAuthHelper
     /**
      * Get new Access Token by using the refresh token
      *
-     * @param \Permafrost\Dropbox\Models\AccessToken $accessToken - Current access token object
-     * @param string $grantType ['refresh_token']
+     * @param  \Permafrost\Dropbox\Models\AccessToken  $accessToken  - Current access token object
+     * @param  string  $grantType  ['refresh_token']
      */
     public function getRefreshedAccessToken($accessToken, $grantType = 'refresh_token')
     {
@@ -250,6 +246,7 @@ class DropboxAuthHelper
      * Revoke Access Token
      *
      * @return void
+     *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function revokeAccessToken()

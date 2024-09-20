@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Models;
 
 class Account extends BaseModel
@@ -27,7 +28,7 @@ class Account extends BaseModel
     /**
      * Whether the user has verified their e-mail address
      *
-     * @var boolean
+     * @var bool
      */
     protected $email_verified = false;
 
@@ -41,7 +42,7 @@ class Account extends BaseModel
     /**
      * Whether the user has been disabled
      *
-     * @var boolean
+     * @var bool
      */
     protected $disabled = false;
 
@@ -69,7 +70,7 @@ class Account extends BaseModel
     /**
      * Indicates whether a work account is linked
      *
-     * @var boolean
+     * @var bool
      */
     protected $is_paired = false;
 
@@ -82,8 +83,6 @@ class Account extends BaseModel
 
     /**
      * Create a new Account instance
-     *
-     * @param array $data
      */
     public function __construct(array $data)
     {
@@ -103,7 +102,7 @@ class Account extends BaseModel
         //Account Type
         $account_type = $this->getDataProperty('account_type');
 
-        if (is_array($account_type) && !empty($account_type)) {
+        if (is_array($account_type) && ! empty($account_type)) {
             $this->account_type = $account_type['.tag'];
         }
     }
@@ -141,7 +140,7 @@ class Account extends BaseModel
             return $name['display_name'];
         }
 
-        return "";
+        return '';
     }
 
     /**
@@ -157,7 +156,7 @@ class Account extends BaseModel
     /**
      * Whether account email is verified
      *
-     * @return boolean
+     * @return bool
      */
     public function emailIsVerified()
     {
@@ -177,7 +176,7 @@ class Account extends BaseModel
     /**
      * Whether acocunt has been disabled
      *
-     * @return boolean
+     * @return bool
      */
     public function isDisabled()
     {
@@ -217,7 +216,7 @@ class Account extends BaseModel
     /**
      * Whether work account is paired
      *
-     * @return boolean
+     * @return bool
      */
     public function isPaired()
     {

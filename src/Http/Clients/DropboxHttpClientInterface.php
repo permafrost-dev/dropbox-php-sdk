@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Http\Clients;
 
 /**
@@ -9,12 +10,11 @@ interface DropboxHttpClientInterface
     /**
      * Send request to the server and fetch the raw response
      *
-     * @param  string $url     URL/Endpoint to send the request to
-     * @param  string $method  Request Method
-     * @param  string|resource|\Psr\Http\Message\StreamInterface|null $body Request Body
-     * @param  array  $headers Request Headers
-     * @param  array  $options Additional Options
-     *
+     * @param  string  $url  URL/Endpoint to send the request to
+     * @param  string  $method  Request Method
+     * @param  string|resource|\Psr\Http\Message\StreamInterface|null  $body  Request Body
+     * @param  array  $headers  Request Headers
+     * @param  array  $options  Additional Options
      * @return \Permafrost\Dropbox\Http\DropboxRawResponse Raw response from the server
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException

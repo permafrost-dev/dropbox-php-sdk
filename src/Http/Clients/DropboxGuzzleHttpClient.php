@@ -3,13 +3,13 @@
 namespace Permafrost\Dropbox\Http\Clients;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Exception\RequestException;
-use Permafrost\Dropbox\Http\DropboxRawResponse;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 use Permafrost\Dropbox\Exceptions\DropboxClientException;
+use Permafrost\Dropbox\Http\DropboxRawResponse;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * DropboxGuzzleHttpClient.
@@ -26,23 +26,22 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
     /**
      * Create a new DropboxGuzzleHttpClient instance.
      *
-     * @param Client $client GuzzleHttp Client
+     * @param  Client  $client  GuzzleHttp Client
      */
-    public function __construct(Client $client = null)
+    public function __construct(?Client $client = null)
     {
         //Set the client
-        $this->client = $client ?: new Client();
+        $this->client = $client ?: new Client;
     }
 
     /**
      * Send request to the server and fetch the raw response.
      *
-     * @param  string $url     URL/Endpoint to send the request to
-     * @param  string $method  Request Method
-     * @param  string|resource|StreamInterface $body Request Body
-     * @param  array  $headers Request Headers
-     * @param  array  $options Additional Options
-     *
+     * @param  string  $url  URL/Endpoint to send the request to
+     * @param  string  $method  Request Method
+     * @param  string|resource|StreamInterface  $body  Request Body
+     * @param  array  $headers  Request Headers
+     * @param  array  $options  Additional Options
      * @return \Permafrost\Dropbox\Http\DropboxRawResponse Raw response from the server
      *
      * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
@@ -88,8 +87,7 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
     /**
      * Get the Response Body.
      *
-     * @param string|\Psr\Http\Message\ResponseInterface $response Response object
-     *
+     * @param  string|\Psr\Http\Message\ResponseInterface  $response  Response object
      * @return string
      */
     protected function getResponseBody($response)

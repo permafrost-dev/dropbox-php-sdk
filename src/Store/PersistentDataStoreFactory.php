@@ -1,4 +1,5 @@
 <?php
+
 namespace Permafrost\Dropbox\Store;
 
 use InvalidArgumentException;
@@ -13,16 +14,15 @@ class PersistentDataStoreFactory
     /**
      * Make Persistent Data Store
      *
-     * @param null|string|\Permafrost\Dropbox\Store\PersistentDataStoreInterface $store
+     * @param  null|string|\Permafrost\Dropbox\Store\PersistentDataStoreInterface  $store
+     * @return \Permafrost\Dropbox\Store\PersistentDataStoreInterface
      *
      * @throws InvalidArgumentException
-     *
-     * @return \Permafrost\Dropbox\Store\PersistentDataStoreInterface
      */
     public static function makePersistentDataStore($store = null)
     {
         if (is_null($store) || $store === 'session') {
-            return new SessionPersistentDataStore();
+            return new SessionPersistentDataStore;
         }
 
         if ($store instanceof PersistentDataStoreInterface) {
