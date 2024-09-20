@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Permafrost\\Dropbox\\": "src/Dropbox"
+            "Permafrost\\Dropbox\\": "src"
         }
     },
     "require-dev": {
