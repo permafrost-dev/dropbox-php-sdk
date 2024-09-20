@@ -1,5 +1,5 @@
 <?php
-namespace Kunnu\Dropbox\Models;
+namespace Permafrost\Dropbox\Models;
 
 use DateTime;
 
@@ -23,7 +23,7 @@ class CopyReference extends BaseModel
     /**
      * File or Folder Metadata
      *
-     * @var \Kunnu\Dropbox\Models\FileMetadata|\Kunnu\Dropbox\Models\FolderMetadata
+     * @var \Permafrost\Dropbox\Models\FileMetadata|\Permafrost\Dropbox\Models\FolderMetadata
      */
     protected $metadata;
 
@@ -65,7 +65,7 @@ class CopyReference extends BaseModel
     /**
      * The metadata for the file/folder
      *
-     * @return \Kunnu\Dropbox\Models\FileMetadata|\Kunnu\Dropbox\Models\FolderMetadata
+     * @return \Permafrost\Dropbox\Models\FileMetadata|\Permafrost\Dropbox\Models\FolderMetadata
      */
     public function getMetadata()
     {

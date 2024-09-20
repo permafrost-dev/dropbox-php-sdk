@@ -1,5 +1,5 @@
 <?php
-namespace Kunnu\Dropbox\Models;
+namespace Permafrost\Dropbox\Models;
 
 use DateTime;
 

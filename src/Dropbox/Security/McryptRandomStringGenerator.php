@@ -1,7 +1,7 @@
 <?php
-namespace Kunnu\Dropbox\Security;
+namespace Permafrost\Dropbox\Security;
 
-use Kunnu\Dropbox\Exceptions\DropboxClientException;
+use Permafrost\Dropbox\Exceptions\DropboxClientException;
 
 /**
  * @inheritdoc
@@ -20,7 +20,7 @@ class McryptRandomStringGenerator implements RandomStringGeneratorInterface
     /**
      * Create a new McryptRandomStringGenerator instance
      *
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function __construct()
     {
@@ -37,7 +37,7 @@ class McryptRandomStringGenerator implements RandomStringGeneratorInterface
      *
      * @param  int $length Length of the string to return
      *
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      *
      * @return string
      */

@@ -1,5 +1,5 @@
 <?php
-namespace Kunnu\Dropbox\Exceptions;
+namespace Permafrost\Dropbox\Exceptions;
 
 use Exception;
 

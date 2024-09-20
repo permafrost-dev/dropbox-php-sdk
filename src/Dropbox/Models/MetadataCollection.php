@@ -1,5 +1,5 @@
 <?php
-namespace Kunnu\Dropbox\Models;
+namespace Permafrost\Dropbox\Models;
 
 class MetadataCollection extends BaseModel
 {
@@ -35,7 +35,7 @@ class MetadataCollection extends BaseModel
     /**
      * List of Files/Folder Metadata
      *
-     * @var \Kunnu\Dropbox\Models\ModelCollection
+     * @var \Permafrost\Dropbox\Models\ModelCollection
      */
     protected $items = null;
 
@@ -102,7 +102,7 @@ class MetadataCollection extends BaseModel
     /**
      * Get the Items
      *
-     * @return \Kunnu\Dropbox\Models\ModelCollection
+     * @return \Permafrost\Dropbox\Models\ModelCollection
      */
     public function getItems()
     {

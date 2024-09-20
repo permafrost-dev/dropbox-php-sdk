@@ -1,10 +1,10 @@
 <?php
-namespace Kunnu\Dropbox\Authentication;
+namespace Permafrost\Dropbox\Authentication;
 
-use Kunnu\Dropbox\DropboxApp;
-use Kunnu\Dropbox\DropboxClient;
-use Kunnu\Dropbox\DropboxRequest;
-use Kunnu\Dropbox\Security\RandomStringGeneratorInterface;
+use Permafrost\Dropbox\DropboxApp;
+use Permafrost\Dropbox\DropboxClient;
+use Permafrost\Dropbox\DropboxRequest;
+use Permafrost\Dropbox\Security\RandomStringGeneratorInterface;
 
 class OAuth2Client
 {
@@ -26,30 +26,30 @@ class OAuth2Client
     /**
      * The Dropbox App
      *
-     * @var \Kunnu\Dropbox\DropboxApp
+     * @var \Permafrost\Dropbox\DropboxApp
      */
     protected $app;
 
     /**
      * The Dropbox Client
      *
-     * @var \Kunnu\Dropbox\DropboxClient
+     * @var \Permafrost\Dropbox\DropboxClient
      */
     protected $client;
 
     /**
      * Random String Generator
      *
-     * @var \Kunnu\Dropbox\Security\RandomStringGeneratorInterface
+     * @var \Permafrost\Dropbox\Security\RandomStringGeneratorInterface
      */
     protected $randStrGenerator;
 
     /**
      * Create a new DropboxApp instance
      *
-     * @param \Kunnu\Dropbox\DropboxApp $app
-     * @param \Kunnu\Dropbox\DropboxClient $client
-     * @param \Kunnu\Dropbox\Security\RandomStringGeneratorInterface $randStrGenerator
+     * @param \Permafrost\Dropbox\DropboxApp $app
+     * @param \Permafrost\Dropbox\DropboxClient $client
+     * @param \Permafrost\Dropbox\Security\RandomStringGeneratorInterface $randStrGenerator
      */
     public function __construct(DropboxApp $app, DropboxClient $client, RandomStringGeneratorInterface $randStrGenerator = null)
     {
@@ -75,7 +75,7 @@ class OAuth2Client
     /**
      * Get the Dropbox App
      *
-     * @return \Kunnu\Dropbox\DropboxApp
+     * @return \Permafrost\Dropbox\DropboxApp
      */
     public function getApp()
     {
@@ -85,7 +85,7 @@ class OAuth2Client
     /**
      * Get the Dropbox Client
      *
-     * @return \Kunnu\Dropbox\DropboxClient
+     * @return \Permafrost\Dropbox\DropboxClient
      */
     public function getClient()
     {
@@ -132,7 +132,7 @@ class OAuth2Client
      * @param  string $grant_type Grant Type ['authorization_code' | 'refresh_token']
      *
      * @return array
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getAccessToken($code, $redirectUri = null, $grant_type = 'authorization_code')
     {
@@ -178,7 +178,7 @@ class OAuth2Client
      * Disables the access token
      *
      * @return void
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function revokeAccessToken()
     {

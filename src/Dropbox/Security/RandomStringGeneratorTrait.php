@@ -1,5 +1,5 @@
 <?php
-namespace Kunnu\Dropbox\Security;
+namespace Permafrost\Dropbox\Security;
 
 trait RandomStringGeneratorTrait
 {

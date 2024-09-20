@@ -4,3 +4,9 @@ index.php
 composer.lock
 /.idea
 .php_cs.cache
+build/
+coverage/
+.env
+.env.*
+*.log
+*.cache

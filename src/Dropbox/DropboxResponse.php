@@ -1,7 +1,7 @@
 <?php
-namespace Kunnu\Dropbox;
+namespace Permafrost\Dropbox;
 
-use Kunnu\Dropbox\Exceptions\DropboxClientException;
+use Permafrost\Dropbox\Exceptions\DropboxClientException;
 
 class DropboxResponse
 {
@@ -83,7 +83,7 @@ class DropboxResponse
     /**
      * Get the Request Request
      *
-     * @return \Kunnu\Dropbox\DropboxRequest
+     * @return \Permafrost\Dropbox\DropboxRequest
      */
     public function getRequest()
     {
@@ -104,7 +104,7 @@ class DropboxResponse
      * Get the Decoded Body
      *
      * @return array
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getDecodedBody()
     {
@@ -173,7 +173,7 @@ class DropboxResponse
      *
      * @return void
      *
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     protected function validateResponse()
     {

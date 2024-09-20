@@ -1,7 +1,7 @@
 <?php
-namespace Kunnu\Dropbox\Models;
+namespace Permafrost\Dropbox\Models;
 
-use Kunnu\Dropbox\DropboxFile;
+use Permafrost\Dropbox\DropboxFile;
 
 class File extends BaseModel
 {
@@ -16,7 +16,7 @@ class File extends BaseModel
     /**
      * File Metadata
      *
-     * @var \Kunnu\Dropbox\Models\FileMetadata
+     * @var \Permafrost\Dropbox\Models\FileMetadata
      */
     protected $metadata;
 
@@ -37,7 +37,7 @@ class File extends BaseModel
     /**
      * The metadata for the file
      *
-     * @return \Kunnu\Dropbox\Models\FileMetadata
+     * @return \Permafrost\Dropbox\Models\FileMetadata
      */
     public function getMetadata()
     {
@@ -48,7 +48,7 @@ class File extends BaseModel
      * Get the file contents
      *
      * @return string
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getContents()
     {

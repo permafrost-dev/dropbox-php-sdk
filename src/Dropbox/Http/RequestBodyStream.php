@@ -1,7 +1,7 @@
 <?php
-namespace Kunnu\Dropbox\Http;
+namespace Permafrost\Dropbox\Http;
 
-use Kunnu\Dropbox\DropboxFile;
+use Permafrost\Dropbox\DropboxFile;
 
 /**
  * RequestBodyStream
@@ -12,14 +12,14 @@ class RequestBodyStream implements RequestBodyInterface
     /**
      * File to be sent with the Request
      *
-     * @var \Kunnu\Dropbox\DropboxFile
+     * @var \Permafrost\Dropbox\DropboxFile
      */
     protected $file;
 
     /**
      * Create a new RequestBodyStream instance
      *
-     * @param \Kunnu\Dropbox\DropboxFile $file
+     * @param \Permafrost\Dropbox\DropboxFile $file
      */
     public function __construct(DropboxFile $file)
     {

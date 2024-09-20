@@ -1,8 +1,8 @@
 <?php
 
-namespace Kunnu\Dropbox;
+namespace Permafrost\Dropbox;
 
-use Kunnu\Dropbox\Exceptions\DropboxClientException;
+use Permafrost\Dropbox\Exceptions\DropboxClientException;
 
 /**
  * DropboxFile
@@ -161,7 +161,7 @@ class DropboxFile
      * Return the contents of the file
      *
      * @return string
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getContents()
     {
@@ -185,7 +185,7 @@ class DropboxFile
      * Get the Open File Stream
      *
      * @return \GuzzleHttp\Psr7\Stream
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getStream()
     {
@@ -317,7 +317,7 @@ class DropboxFile
      * Get the size of the file
      *
      * @return int
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getSize()
     {

@@ -1,10 +1,10 @@
 <?php
-namespace Kunnu\Dropbox\Authentication;
+namespace Permafrost\Dropbox\Authentication;
 
-use Kunnu\Dropbox\Models\AccessToken;
-use Kunnu\Dropbox\Exceptions\DropboxClientException;
-use Kunnu\Dropbox\Store\PersistentDataStoreInterface;
-use Kunnu\Dropbox\Security\RandomStringGeneratorInterface;
+use Permafrost\Dropbox\Models\AccessToken;
+use Permafrost\Dropbox\Exceptions\DropboxClientException;
+use Permafrost\Dropbox\Store\PersistentDataStoreInterface;
+use Permafrost\Dropbox\Security\RandomStringGeneratorInterface;
 
 class DropboxAuthHelper
 {
@@ -18,21 +18,21 @@ class DropboxAuthHelper
     /**
      * OAuth2 Client
      *
-     * @var \Kunnu\Dropbox\Authentication\OAuth2Client
+     * @var \Permafrost\Dropbox\Authentication\OAuth2Client
      */
     protected $oAuth2Client;
 
     /**
      * Random String Generator
      *
-     * @var \Kunnu\Dropbox\Security\RandomStringGeneratorInterface
+     * @var \Permafrost\Dropbox\Security\RandomStringGeneratorInterface
      */
     protected $randomStringGenerator;
 
     /**
      * Persistent Data Store
      *
-     * @var \Kunnu\Dropbox\Store\PersistentDataStoreInterface
+     * @var \Permafrost\Dropbox\Store\PersistentDataStoreInterface
      */
     protected $persistentDataStore;
 
@@ -46,9 +46,9 @@ class DropboxAuthHelper
     /**
      * Create a new DropboxAuthHelper instance
      *
-     * @param \Kunnu\Dropbox\Authentication\OAuth2Client             $oAuth2Client
-     * @param \Kunnu\Dropbox\Security\RandomStringGeneratorInterface $randomStringGenerator
-     * @param \Kunnu\Dropbox\Store\PersistentDataStoreInterface      $persistentDataStore
+     * @param \Permafrost\Dropbox\Authentication\OAuth2Client             $oAuth2Client
+     * @param \Permafrost\Dropbox\Security\RandomStringGeneratorInterface $randomStringGenerator
+     * @param \Permafrost\Dropbox\Store\PersistentDataStoreInterface      $persistentDataStore
      */
     public function __construct(
         OAuth2Client $oAuth2Client,
@@ -63,7 +63,7 @@ class DropboxAuthHelper
     /**
      * Get OAuth2Client
      *
-     * @return \Kunnu\Dropbox\Authentication\OAuth2Client
+     * @return \Permafrost\Dropbox\Authentication\OAuth2Client
      */
     public function getOAuth2Client()
     {
@@ -73,7 +73,7 @@ class DropboxAuthHelper
     /**
      * Get the Random String Generator
      *
-     * @return \Kunnu\Dropbox\Security\RandomStringGeneratorInterface
+     * @return \Permafrost\Dropbox\Security\RandomStringGeneratorInterface
      */
     public function getRandomStringGenerator()
     {
@@ -83,7 +83,7 @@ class DropboxAuthHelper
     /**
      * Get the Persistent Data Store
      *
-     * @return \Kunnu\Dropbox\Store\PersistentDataStoreInterface
+     * @return \Permafrost\Dropbox\Store\PersistentDataStoreInterface
      */
     public function getPersistentDataStore()
     {
@@ -199,8 +199,8 @@ class DropboxAuthHelper
      * @param  string $state CSRF & URL State
      * @param  string $redirectUri Redirect URI used while getAuthUrl
      *
-     * @return \Kunnu\Dropbox\Models\AccessToken
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @return \Permafrost\Dropbox\Models\AccessToken
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function getAccessToken($code, $state = null, $redirectUri = null)
     {
@@ -231,7 +231,7 @@ class DropboxAuthHelper
     /**
      * Get new Access Token by using the refresh token
      *
-     * @param \Kunnu\Dropbox\Models\AccessToken $accessToken - Current access token object
+     * @param \Permafrost\Dropbox\Models\AccessToken $accessToken - Current access token object
      * @param string $grantType ['refresh_token']
      */
     public function getRefreshedAccessToken($accessToken, $grantType = 'refresh_token')
@@ -250,7 +250,7 @@ class DropboxAuthHelper
      * Revoke Access Token
      *
      * @return void
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \Permafrost\Dropbox\Exceptions\DropboxClientException
      */
     public function revokeAccessToken()
     {

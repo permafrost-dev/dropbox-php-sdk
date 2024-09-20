@@ -1,5 +1,5 @@
 <?php
-namespace Kunnu\Dropbox\Http;
+namespace Permafrost\Dropbox\Http;
 
 /**
  * RequestBodyInterface
